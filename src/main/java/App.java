@@ -65,9 +65,6 @@ public class App {
 
         staticFileLocation("/public");
 
-        get("/",(req,res)->{
-            res.redirect("index.html"); return null;
-        });
 
         get("/users", (req,res)->{
             return  gson.toJson(userDao.getAllUsers());
