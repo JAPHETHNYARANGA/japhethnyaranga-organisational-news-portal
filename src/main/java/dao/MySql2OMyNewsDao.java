@@ -23,13 +23,13 @@ public class MySql2OMyNewsDao implements MyNewsDao {
     public List<MyNews> getAllNews() {
 
         List<MyNews> myNews = new ArrayList<>();
-        myNews.addAll(getGeneralNews());
+        myNews.addAll(getNews());
         myNews.addAll(getDepartmentNews());
         return myNews;
     }
 
     @Override
-    public List<MyNews> getGeneralNews() {
+    public List<MyNews> getNews() {
         String sql = "select * from news where type=:type";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
@@ -141,7 +141,7 @@ public class MySql2OMyNewsDao implements MyNewsDao {
     }
 
     @Override
-    public void clearGeneralNews() {
+    public void clearNews() {
         String sql="delete from news where type = :type";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)

@@ -68,8 +68,8 @@ public class Sql2OMyMyNewsDaoTest {
         int n1_id = n1.getId();
         int n2_id = n2.getId();
 
-        assertEquals(2,newsDao.getGeneralNews().size());
-        assertTrue(newsDao.getGeneralNews().containsAll(Arrays.asList(n1,n2)));
+        assertEquals(2,newsDao.getNews().size());
+        assertTrue(newsDao.getNews().containsAll(Arrays.asList(n1,n2)));
     }
 
     @Test
@@ -107,8 +107,8 @@ public class Sql2OMyMyNewsDaoTest {
         assertNotEquals(oln2_id, n2.getId());
         assertTrue(n2.getId() > n1.getId());
         assertTrue( 1==n2.getId() - n1.getId());
-        assertEquals(2,newsDao.getGeneralNews().size());
-        assertTrue(newsDao.getGeneralNews().containsAll(Arrays.asList(n1,n2)));
+        assertEquals(2,newsDao.getNews().size());
+        assertTrue(newsDao.getNews().containsAll(Arrays.asList(n1,n2)));
     }
 
     @Test
@@ -250,8 +250,8 @@ public class Sql2OMyMyNewsDaoTest {
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
 
-        newsDao.clearGeneralNews();
-        assertEquals(0,newsDao.getGeneralNews().size());
+        newsDao.clearNews();
+        assertEquals(0,newsDao.getNews().size());
         assertEquals(2,newsDao.getDepartmentNews().size());
     }
 
@@ -270,7 +270,7 @@ public class Sql2OMyMyNewsDaoTest {
         newsDao.addDepartmentNews(dn2);
 
         newsDao.clearDepartmentNews();
-        assertEquals(2,newsDao.getGeneralNews().size());
+        assertEquals(2,newsDao.getNews().size());
         assertEquals(0,newsDao.getDepartmentNews().size());
     }
 

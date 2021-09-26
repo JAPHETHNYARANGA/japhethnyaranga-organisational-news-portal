@@ -8,7 +8,7 @@ import java.util.List;
 public interface MyNewsDao {
 
     List<MyNews> getAllNews();
-    List<MyNews> getGeneralNews();
+    List<MyNews> getNews();
     List<DepartmentMyNews> getDepartmentNews();
 
     void addGeneralNews(MyNews myNews);
@@ -21,6 +21,6 @@ public interface MyNewsDao {
     void updateDepartmentNews(DepartmentMyNews dptNews, int userId, String content, int departmentId);
 
     void clearAllNews();
-    void clearGeneralNews();
+    void clearNews();
     void clearDepartmentNews();
 }

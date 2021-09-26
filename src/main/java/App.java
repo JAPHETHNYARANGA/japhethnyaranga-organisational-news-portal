@@ -95,7 +95,7 @@ public class App {
             return  gson.toJson(newsDao.getAllNews());
         });
         get("/news/general", (req,res)->{
-            return  gson.toJson(newsDao.getGeneralNews());
+            return  gson.toJson(newsDao.getNews());
         });
         get("/news/department", (req,res)->{
             return  gson.toJson(newsDao.getDepartmentNews());

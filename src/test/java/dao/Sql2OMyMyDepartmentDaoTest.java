@@ -29,7 +29,7 @@ public class Sql2OMyMyDepartmentDaoTest {
         newsDao = new MySql2OMyNewsDao(sql2o);
         con = sql2o.open();
 
-        dptDao.clearAllDepartments(); //start with empty table
+        dptDao.clearAllDepartments();
         userDao.clearAllUsers();
     }
 
@@ -40,7 +40,7 @@ public class Sql2OMyMyDepartmentDaoTest {
     public static void shutDown() throws Exception { con.close(); }
 
     @Test
-    public void getAllDepartments_ReturnsAllDepartments_True() {
+    public void if_method_returns_all_departments_True() {
         MyDepartment d1 = setupDepartment();
         MyDepartment d2 = setupDepartment();
 
