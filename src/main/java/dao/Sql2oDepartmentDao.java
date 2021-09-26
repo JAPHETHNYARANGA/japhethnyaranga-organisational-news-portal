@@ -2,8 +2,7 @@ package dao;
 
 import models.Department;
 import models.DepartmentNews;
-import models.News;
-import models.User;
+import models.MyUsers;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -14,12 +13,12 @@ import java.util.stream.Collectors;
 public class Sql2oDepartmentDao implements DepartmentDao {
 
     private final Sql2o sql2o;
-    private final Sql2oUserDao userDao;
+    private final Sql2OMyUsersDao userDao;
     private final Sql2oNewsDao newsDao;
 
     public Sql2oDepartmentDao(Sql2o sql2o) {
         this.sql2o = sql2o;
-        this.userDao = new Sql2oUserDao(sql2o);
+        this.userDao = new Sql2OMyUsersDao(sql2o);
         this.newsDao = new Sql2oNewsDao(sql2o);
 
     }
@@ -35,7 +34,7 @@ public class Sql2oDepartmentDao implements DepartmentDao {
     }
 
     @Override
-    public List<User> getDepartmentUsersById(int id) {
+    public List<MyUsers> getDepartmentUsersById(int id) {
         return userDao.getAllUsers().stream()
                 .filter(user -> user.getDepartmentId()==id )
                 .collect(Collectors.toList());
