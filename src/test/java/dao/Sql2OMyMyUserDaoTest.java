@@ -1,6 +1,6 @@
 package dao;
 
-import models.User;
+import models.MyUser;
 import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -9,16 +9,16 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class Sql2oUserDaoTest {
+public class Sql2OMyMyUserDaoTest {
 
-    private static  Sql2oUserDao userDao;
+    private static MySql2OMyUserDao userDao;
     private static Connection con;
     @BeforeClass
     public static void setUp() throws Exception {
         String connectionStr="jdbc:postgresql://localhost:5432/newsportal_test";
         Sql2o sql2o = new Sql2o(connectionStr,"japhethnyaranga","34120648");
 
-        userDao = new Sql2oUserDao(sql2o);
+        userDao = new MySql2OMyUserDao(sql2o);
         con = sql2o.open();
         userDao.clearAllUsers(); //start with empty table
     }
@@ -31,8 +31,8 @@ public class Sql2oUserDaoTest {
 
     @Test
     public void getAllUsers_ReturnsAllUsers_True() {
-        User u1 = setUpUser();
-        User u2 = setUpUser();
+        MyUser u1 = setUpUser();
+        MyUser u2 = setUpUser();
 
         userDao.addUser(u1);
         userDao.addUser(u2);
@@ -44,8 +44,8 @@ public class Sql2oUserDaoTest {
 
     @Test
     public void addUser_AddsUserSetsId_True() {
-        User u1 = setUpUser();
-        User u2 = setUpUser();
+        MyUser u1 = setUpUser();
+        MyUser u2 = setUpUser();
 
         int u1_id = u1.getId();
         int u2_id = u2.getId();
@@ -62,20 +62,20 @@ public class Sql2oUserDaoTest {
 
     @Test
     public void findUserById_ReturnsCorrectUser_True() {
-        User u1 = setUpUser();
-        User u2 = setUpUser();
+        MyUser u1 = setUpUser();
+        MyUser u2 = setUpUser();
         userDao.addUser(u1);
         userDao.addUser(u2);
 
-        User foundUser = userDao.findUserById(u1.getId());
-        assertEquals(u1,foundUser);
+        MyUser foundMyUser = userDao.findUserById(u1.getId());
+        assertEquals(u1, foundMyUser);
 
     }
 
     @Test
     public void updateUser_UpdatesUserNamePositionRoleDepartmentId_True() {
-        User u1 = setUpUser();
-        User u2 = setUpUser();
+        MyUser u1 = setUpUser();
+        MyUser u2 = setUpUser();
         userDao.addUser(u1);
         userDao.addUser(u2);
 
@@ -98,8 +98,8 @@ public class Sql2oUserDaoTest {
 
     @Test
     public void clearAllUsers_clearsAllUsers_True() {
-        User u1 = setUpUser();
-        User u2 = setUpUser();
+        MyUser u1 = setUpUser();
+        MyUser u2 = setUpUser();
         userDao.addUser(u1);
         userDao.addUser(u2);
         userDao.clearAllUsers();
@@ -107,5 +107,5 @@ public class Sql2oUserDaoTest {
         assertEquals(0, userDao.getAllUsers().size());
     }
 
-    private User setUpUser(){return  new User(0,"Ann Lyn","Junior","Admin",1); }
+    private MyUser setUpUser(){return  new MyUser(0,"Ann Lyn","Junior","Admin",1); }
 }

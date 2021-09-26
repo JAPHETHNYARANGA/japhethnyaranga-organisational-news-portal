@@ -3,7 +3,7 @@ package models;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class News {
+public class MyNews {
     //id, userID, type, content, postdate
     private int id;
     private int userid;
@@ -11,7 +11,7 @@ public class News {
     private String content;
     private Timestamp postdate;
 
-    public News(int id, int userId, String type, String content, Timestamp postdate) {
+    public MyNews(int id, int userId, String type, String content, Timestamp postdate) {
         this.id = id;
         this.userid = userId;
         this.type = type;
@@ -54,11 +54,11 @@ public class News {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        News news = (News) o;
-        return id == news.id &&
-                userid == news.userid &&
-                Objects.equals(type, news.type) &&
-                Objects.equals(content, news.content);
+        MyNews myNews = (MyNews) o;
+        return id == myNews.id &&
+                userid == myNews.userid &&
+                Objects.equals(type, myNews.type) &&
+                Objects.equals(content, myNews.content);
     }
 
     @Override

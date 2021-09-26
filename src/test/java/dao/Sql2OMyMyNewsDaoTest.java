@@ -1,7 +1,7 @@
 package dao;
 
-import models.DepartmentNews;
-import models.News;
+import models.DepartmentMyNews;
+import models.MyNews;
 import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -12,16 +12,16 @@ import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
 
-public class Sql2oNewsDaoTest {
+public class Sql2OMyMyNewsDaoTest {
 
-    private static  Sql2oNewsDao newsDao;
+    private static MySql2OMyNewsDao newsDao;
     private static Connection con;
     @BeforeClass
     public static void setUp() throws Exception {
         String connectionStr="jdbc:postgresql://localhost:5432/newsportal_test";
         Sql2o sql2o = new Sql2o(connectionStr,"japhethnyaranga","34120648");
 
-        newsDao = new Sql2oNewsDao(sql2o);
+        newsDao = new MySql2OMyNewsDao(sql2o);
         con = sql2o.open();
         newsDao.clearAllNews(); //start with empty table
     }
@@ -34,14 +34,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void getAllNews_ReturnsAllNews_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -53,14 +53,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void getGeneralNews_ReturnsGeneralNews_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -75,14 +75,14 @@ public class Sql2oNewsDaoTest {
     @Test
     public void getDepartmentNews_ReturnsDepartmentNews_True() {
         //bug was due to setting deptId in addDepartmentNews rather than setting id.
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -94,8 +94,8 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void addGeneralNews_AddsGeneralNewsSetsId() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         int oln1_id = n1.getId();
         int oln2_id = n2.getId();
@@ -113,8 +113,8 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void addDepartmentNews_AddsDepartmentNewsSetsId() {
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         int oldn1_id = dn1.getId();
         int oldn2_id = dn2.getId();
@@ -132,47 +132,47 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void findGeneralNewsById_findsCorrectGeneralNews_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
 
-        News foundNews = newsDao.findGeneralNewsById(n1.getId());
-        assertEquals(foundNews, n1);
+        MyNews foundMyNews = newsDao.findGeneralNewsById(n1.getId());
+        assertEquals(foundMyNews, n1);
 
     }
 
     @Test
     public void findDepartmentNewsById_findsCorrectDepartmentNews_True() {
 
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
 
-        DepartmentNews foundDepartmentNews = newsDao.findDepartmentNewsById(dn1.getId());
+        DepartmentMyNews foundDepartmentNews = newsDao.findDepartmentNewsById(dn1.getId());
         assertEquals(foundDepartmentNews, dn1);
     }
 
 
     @Test
     public void updateGeneralNews_updatesUserIdContent_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
@@ -193,8 +193,8 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void updateDepartmentNews_updatesUserIdContentDepartmentId_True() {
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -220,14 +220,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void clearAllNews_clearsAllNews_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -238,14 +238,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void clearGeneralNews_clearsGeneralNewsOnly_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -257,14 +257,14 @@ public class Sql2oNewsDaoTest {
 
     @Test
     public void clearDepartmentNews_clearsDepartmentNewsOnly_True() {
-        News n1 = setupGeneralNews();
-        News n2 = setupGeneralNews();
+        MyNews n1 = setupGeneralNews();
+        MyNews n2 = setupGeneralNews();
 
         newsDao.addGeneralNews(n1);
         newsDao.addGeneralNews(n2);
 
-        DepartmentNews dn1 = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn1 = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn1);
         newsDao.addDepartmentNews(dn2);
@@ -274,11 +274,11 @@ public class Sql2oNewsDaoTest {
         assertEquals(0,newsDao.getDepartmentNews().size());
     }
 
-    private static News setupGeneralNews(){
-        return new News(-1,1,Sql2oNewsDao.GENERAL_NEWS,"Space Travel",new Timestamp(new Date().getTime()));
+    private static MyNews setupGeneralNews(){
+        return new MyNews(-1,1, MySql2OMyNewsDao.GENERAL_NEWS,"Space Travel",new Timestamp(new Date().getTime()));
     }
 
-    private static DepartmentNews setupDepartmentNews(){
-        return new DepartmentNews(-1,1,Sql2oNewsDao.DEPARTMENT_NEWS,"Space Travel",new Timestamp(new Date().getTime()),1);
+    private static DepartmentMyNews setupDepartmentNews(){
+        return new DepartmentMyNews(-1,1, MySql2OMyNewsDao.DEPARTMENT_NEWS,"Space Travel",new Timestamp(new Date().getTime()),1);
     }
 }

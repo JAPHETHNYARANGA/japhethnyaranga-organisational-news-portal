@@ -1,8 +1,8 @@
 package dao;
 
-import models.Department;
-import models.DepartmentNews;
-import models.User;
+import models.DepartmentMyNews;
+import models.MyDepartment;
+import models.MyUser;
 import org.junit.*;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -13,20 +13,20 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class Sql2oDepartmentDaoTest {
+public class Sql2OMyMyDepartmentDaoTest {
 
-    private static  Sql2oDepartmentDao dptDao;
-    private static Sql2oUserDao userDao;
-    private static Sql2oNewsDao newsDao;
+    private static MySql2OMyDepartmentDao dptDao;
+    private static MySql2OMyUserDao userDao;
+    private static MySql2OMyNewsDao newsDao;
     private static Connection con;
     @BeforeClass
     public static void setUp() throws Exception {
         String connectionStr="jdbc:postgresql://localhost:5432/newsportal_test";
         Sql2o sql2o = new Sql2o(connectionStr,"japhethnyaranga","34120648");
 
-        dptDao = new Sql2oDepartmentDao (sql2o);
-        userDao = new Sql2oUserDao (sql2o);
-        newsDao = new Sql2oNewsDao(sql2o);
+        dptDao = new MySql2OMyDepartmentDao(sql2o);
+        userDao = new MySql2OMyUserDao(sql2o);
+        newsDao = new MySql2OMyNewsDao(sql2o);
         con = sql2o.open();
 
         dptDao.clearAllDepartments(); //start with empty table
@@ -41,8 +41,8 @@ public class Sql2oDepartmentDaoTest {
 
     @Test
     public void getAllDepartments_ReturnsAllDepartments_True() {
-        Department d1 = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d1 = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d1);
         dptDao.addDepartment(d2);
@@ -54,51 +54,51 @@ public class Sql2oDepartmentDaoTest {
     @Test
     public void getDepartmentUsersById_ReturnsDepartmentsUsers_True() {
 
-        Department d1 = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d1 = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d1);
         dptDao.addDepartment(d2);
 
-        User user1 = setupUser();
-        User user2 = setupUser();
-        User user3 = setupUser();
-        User user4 = setupUser();
-        userDao.addUser(user1);
-        userDao.addUser(user2);
-        userDao.addUser(user3);
-        userDao.addUser(user4);
+        MyUser myUser1 = setupUser();
+        MyUser myUser2 = setupUser();
+        MyUser myUser3 = setupUser();
+        MyUser myUser4 = setupUser();
+        userDao.addUser(myUser1);
+        userDao.addUser(myUser2);
+        userDao.addUser(myUser3);
+        userDao.addUser(myUser4);
 
-        userDao.updateUser(user1,user1.getName(),user1.getPosition(),user1.getRole(),d1.getId());
-        userDao.updateUser(user2,user2.getName(),user2.getPosition(),user2.getRole(),d1.getId());
-        userDao.updateUser(user3,user3.getName(),user3.getPosition(),user3.getRole(),d2.getId());
+        userDao.updateUser(myUser1, myUser1.getName(), myUser1.getPosition(), myUser1.getRole(),d1.getId());
+        userDao.updateUser(myUser2, myUser2.getName(), myUser2.getPosition(), myUser2.getRole(),d1.getId());
+        userDao.updateUser(myUser3, myUser3.getName(), myUser3.getPosition(), myUser3.getRole(),d2.getId());
 
         int dc = dptDao.getAllDepartments().size();
         int uc = userDao.getAllUsers().size();
 
         assertEquals(2, dptDao.getDepartmentUsersById(d1.getId()).size());
-        assertTrue(dptDao.getDepartmentUsersById(d1.getId()).containsAll(Arrays.asList(user1,user2)));
+        assertTrue(dptDao.getDepartmentUsersById(d1.getId()).containsAll(Arrays.asList(myUser1, myUser2)));
 
 
         assertEquals(1, dptDao.getDepartmentUsersById(d2.getId()).size());
-        assertTrue(dptDao.getDepartmentUsersById(d2.getId()).containsAll(Arrays.asList(user3)));
-        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(user1));
-        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(user2));
-        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(user4));
+        assertTrue(dptDao.getDepartmentUsersById(d2.getId()).containsAll(Arrays.asList(myUser3)));
+        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(myUser1));
+        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(myUser2));
+        assertFalse(dptDao.getDepartmentUsersById(d2.getId()).contains(myUser4));
     }
 
     @Test
     public void getDepartmentNewsById_ReturnsDepartmentsNews_True() {
-        Department d1 = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d1 = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d1);
         dptDao.addDepartment(d2);
 
-        DepartmentNews dn = setupDepartmentNews();
-        DepartmentNews dn2 = setupDepartmentNews();
-        DepartmentNews dn3 = setupDepartmentNews();
-        DepartmentNews dn4 = setupDepartmentNews();
+        DepartmentMyNews dn = setupDepartmentNews();
+        DepartmentMyNews dn2 = setupDepartmentNews();
+        DepartmentMyNews dn3 = setupDepartmentNews();
+        DepartmentMyNews dn4 = setupDepartmentNews();
 
         newsDao.addDepartmentNews(dn);
         newsDao.addDepartmentNews(dn2);
@@ -122,8 +122,8 @@ public class Sql2oDepartmentDaoTest {
     @Test
     public void addDepartment_addsDepartmentSetsId_True() {
 
-        Department d1 = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d1 = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         int ol_id = d1.getId();
         int ol_id2= d2.getId();
@@ -140,21 +140,21 @@ public class Sql2oDepartmentDaoTest {
 
     @Test
     public void findDepartmentById_findsCorrectDepartment_True() {
-        Department d1 = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d1 = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d1);
         dptDao.addDepartment(d2);
 
-        Department foundDpt = dptDao.findDepartmentById(d1.getId());
+        MyDepartment foundDpt = dptDao.findDepartmentById(d1.getId());
 
         assertEquals(foundDpt,d1);
     }
 
     @Test
     public void updateDepartment_updatesNameDescription_True() {
-        Department d = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d);
         dptDao.addDepartment(d2);
@@ -176,8 +176,8 @@ public class Sql2oDepartmentDaoTest {
 
     @Test
     public void clearAllDepartments() {
-        Department d = setupDepartment();
-        Department d2 = setupDepartment();
+        MyDepartment d = setupDepartment();
+        MyDepartment d2 = setupDepartment();
 
         dptDao.addDepartment(d);
         dptDao.addDepartment(d2);
@@ -187,15 +187,15 @@ public class Sql2oDepartmentDaoTest {
         assertEquals(0,dptDao.getAllDepartments().size());
     }
 
-    private Department setupDepartment(){
-        return new Department(1,"Finance","Everything accounting");
+    private MyDepartment setupDepartment(){
+        return new MyDepartment(1,"Finance","Everything accounting");
     }
 
-    private User setupUser(){
-        return new User(1,"Ann","Senior","CFO",1);
+    private MyUser setupUser(){
+        return new MyUser(1,"Ann","Senior","CFO",1);
     }
 
-    private DepartmentNews setupDepartmentNews(){
-        return new DepartmentNews(1,1,Sql2oNewsDao.DEPARTMENT_NEWS,"Oceans",new Timestamp(new Date().getTime()),1);
+    private DepartmentMyNews setupDepartmentNews(){
+        return new DepartmentMyNews(1,1, MySql2OMyNewsDao.DEPARTMENT_NEWS,"Oceans",new Timestamp(new Date().getTime()),1);
     }
 }

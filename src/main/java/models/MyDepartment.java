@@ -2,13 +2,13 @@ package models;
 
 import java.util.Objects;
 
-public class Department {
+public class MyDepartment {
 
     private int id;
     private String name;
     private String description;
 
-    public Department(int id, String name, String description) {
+    public MyDepartment(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,7 +37,7 @@ public class Department {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Department that = (Department) o;
+        MyDepartment that = (MyDepartment) o;
         return id == that.id &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description);
@@ -48,10 +48,10 @@ public class Department {
         return Objects.hash(id, name, description);
     }
 
-    public static class DepartmentWithUserCount extends  Department {
+    public static class MyDepartmentWithUserCount extends MyDepartment {
         private int count;
 
-        public DepartmentWithUserCount(int id, String name, String description,int count) {
+        public MyDepartmentWithUserCount(int id, String name, String description, int count) {
             super(id, name, description);
             this.count=count;
         }

@@ -14,14 +14,14 @@
 
     </div>
     <ul class="mt-5">
-        <li ng-if="users" class="my-1" ng-repeat="user in users">
+        <li ng-if="users" class="my-1" ng-repeat="myUser in users">
             <div class="shadow p-2 bg-white">
-                <div class="card-title">{{user.id}}</div>
+                <div class="card-title">{{myUser.id}}</div>
                 <hr>
-                <div class="card-text">{{user.name}}</div>
-                <div class="card-text">{{user.position}}</div>
-                <div class="card-text">{{user.role}}</div>
-                <div class="card-text">{{user.departmentId}}</div>
+                <div class="card-text">{{myUser.name}}</div>
+                <div class="card-text">{{myUser.position}}</div>
+                <div class="card-text">{{myUser.role}}</div>
+                <div class="card-text">{{myUser.departmentId}}</div>
             </div>
         </li>
     </ul>

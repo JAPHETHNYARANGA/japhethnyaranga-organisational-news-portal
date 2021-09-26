@@ -1,11 +1,11 @@
 import com.google.gson.Gson;
-import dao.Sql2oDepartmentDao;
-import dao.Sql2oNewsDao;
-import dao.Sql2oUserDao;
-import models.Department;
-import models.DepartmentNews;
-import models.News;
-import models.User;
+import dao.MySql2OMyDepartmentDao;
+import dao.MySql2OMyNewsDao;
+import dao.MySql2OMyUserDao;
+import models.MyDepartment;
+import models.DepartmentMyNews;
+import models.MyNews;
+import models.MyUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
@@ -18,9 +18,9 @@ import static spark.Spark.*;
 
 public class App {
 
-    private static Sql2oNewsDao newsDao;
-    private static Sql2oDepartmentDao dptDao;
-    private static Sql2oUserDao userDao;
+    private static MySql2OMyNewsDao newsDao;
+    private static MySql2OMyDepartmentDao dptDao;
+    private static MySql2OMyUserDao userDao;
     private static  Sql2o sql2o;
     private static URI dbUri;
     private static Logger logger = LoggerFactory.getLogger(App.class);
@@ -59,9 +59,9 @@ public class App {
 
         con = sql2o.open();
 
-        newsDao = new Sql2oNewsDao(sql2o);
-        dptDao = new Sql2oDepartmentDao(sql2o);
-        userDao = new Sql2oUserDao(sql2o);
+        newsDao = new MySql2OMyNewsDao(sql2o);
+        dptDao = new MySql2OMyDepartmentDao(sql2o);
+        userDao = new MySql2OMyUserDao(sql2o);
 
         staticFileLocation("/public");
 
@@ -102,7 +102,7 @@ public class App {
         });
 
         post("/Departments/new", "application/json", (req,res)->{
-            Department dpt = gson.fromJson(req.body(),Department.class);
+            MyDepartment dpt = gson.fromJson(req.body(), MyDepartment.class);
 
             dptDao.addDepartment(dpt);
             res.status(201);
@@ -111,9 +111,9 @@ public class App {
             return null;//gson.toJson(dpt);
         });
         post("/Users/new", "application/json", (req,res)->{
-            User user = gson.fromJson(req.body(), User.class);
+            MyUser myUser = gson.fromJson(req.body(), MyUser.class);
 
-            userDao.addUser(user);
+            userDao.addUser(myUser);
             res.status(201);
             res.type("application/json");
 
@@ -121,16 +121,16 @@ public class App {
             return null; //gson.toJson(user);
         });
         post("/News/new", "application/json", (req,res)->{
-            News news = gson.fromJson(req.body(), News.class);
+            MyNews myNews = gson.fromJson(req.body(), MyNews.class);
 
-            newsDao.addGeneralNews(news);
+            newsDao.addGeneralNews(myNews);
             res.status(201);
             res.type("application/json");
             res.redirect("/news/general");
             return null; //gson.toJson(news);
         });
         post("/DepartmentNews/new", "application/json", (req,res)->{
-            DepartmentNews dnews = gson.fromJson(req.body(), DepartmentNews.class);
+            DepartmentMyNews dnews = gson.fromJson(req.body(), DepartmentMyNews.class);
 
             newsDao.addDepartmentNews(dnews);
             res.status(201);

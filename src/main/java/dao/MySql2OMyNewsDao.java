@@ -1,70 +1,70 @@
 package dao;
 
-import models.DepartmentNews;
-import models.News;
+import models.DepartmentMyNews;
+import models.MyNews;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sql2oNewsDao implements NewsDao {
+public class MySql2OMyNewsDao implements MyNewsDao {
 
 
     private final Sql2o sql2o;
     public static final String GENERAL_NEWS="general";
     public static final String DEPARTMENT_NEWS="department";
 
-    public Sql2oNewsDao(Sql2o sql2o) {
+    public MySql2OMyNewsDao(Sql2o sql2o) {
         this.sql2o = sql2o;
     }
 
     @Override
-    public List<News> getAllNews() {
+    public List<MyNews> getAllNews() {
 
-        List<News> news = new ArrayList<>();
-        news.addAll(getGeneralNews());
-        news.addAll(getDepartmentNews());
-        return news;
+        List<MyNews> myNews = new ArrayList<>();
+        myNews.addAll(getGeneralNews());
+        myNews.addAll(getDepartmentNews());
+        return myNews;
     }
 
     @Override
-    public List<News> getGeneralNews() {
+    public List<MyNews> getGeneralNews() {
         String sql = "select * from news where type=:type";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .throwOnMappingFailure(false)
                     .addParameter("type",GENERAL_NEWS)
-                    .executeAndFetch(News.class);
+                    .executeAndFetch(MyNews.class);
         }
 
     }
 
     @Override
-    public List<DepartmentNews> getDepartmentNews() {
+    public List<DepartmentMyNews> getDepartmentNews() {
         String sql = "select * from news where type=:type";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .addParameter("type",DEPARTMENT_NEWS)
-                    .executeAndFetch(DepartmentNews.class);
+                    .executeAndFetch(DepartmentMyNews.class);
         }
     }
 
     @Override
-    public void addGeneralNews(News news) {
+    public void addGeneralNews(MyNews myNews) {
         String sql = "insert into news (userId,type,content,postdate) values (:userId,:type,:content,now()) ";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql,true)
-                    .addParameter("userId",news.getUserId())
-                    .addParameter("type",news.getType())
-                    .addParameter("content",news.getContent())
+                    .addParameter("userId", myNews.getUserId())
+                    .addParameter("type", myNews.getType())
+                    .addParameter("content", myNews.getContent())
                     .executeUpdate().getKey();
-            news.setId(id);
+            myNews.setId(id);
         }
     }
 
     @Override
-    public void addDepartmentNews(DepartmentNews dptNews) {
+    public void addDepartmentNews(DepartmentMyNews dptNews) {
         String sql =" insert into news (userId,type,content,postdate,departmentId) values (:userId,:type,:content,now(),:departmentId) ";
         try(Connection con = sql2o.open()){
             int id = (int)  con.createQuery(sql,true)
@@ -78,46 +78,46 @@ public class Sql2oNewsDao implements NewsDao {
     }
 
     @Override
-    public News findGeneralNewsById(int id) {
+    public MyNews findGeneralNewsById(int id) {
         String sql = " select * from news where type=:type and id=:id";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .throwOnMappingFailure(false)
                     .addParameter("type",GENERAL_NEWS)
                     .addParameter("id",id)
-                    .executeAndFetchFirst(News.class);
+                    .executeAndFetchFirst(MyNews.class);
         }
 
     }
 
     @Override
-    public DepartmentNews findDepartmentNewsById(int id) {
+    public DepartmentMyNews findDepartmentNewsById(int id) {
         String sql = " select * from news where type=:type and id=:id";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .addParameter("type",DEPARTMENT_NEWS)
                     .addParameter("id",id)
-                    .executeAndFetchFirst(DepartmentNews.class);
+                    .executeAndFetchFirst(DepartmentMyNews.class);
         }
     }
 
     @Override
-    public void updateGeneralNews(News news, int userId, String content) {
+    public void updateGeneralNews(MyNews myNews, int userId, String content) {
         String sql = "update news set (userId, content) = (:userId, :content)  where id=:id ";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("userId",userId)
                     .addParameter("content",content)
-                    .addParameter("id",news.getId())
+                    .addParameter("id", myNews.getId())
                     .executeUpdate();
-            news.setUserId(userId);
-            news.setContent(content);
+            myNews.setUserId(userId);
+            myNews.setContent(content);
         }
 
     }
 
     @Override
-    public void updateDepartmentNews(DepartmentNews dptNews, int userId, String content, int departmentId) {
+    public void updateDepartmentNews(DepartmentMyNews dptNews, int userId, String content, int departmentId) {
         String sql = "update news set (userId, content,departmentId) = (:userId,  :content,:departmentId)  where id=:id ";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)

@@ -1,49 +1,49 @@
 package dao;
 
-import models.User;
+import models.MyUser;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
 import java.util.List;
 
-public class Sql2oUserDao implements UserDao {
+public class MySql2OMyUserDao implements MyUserDao {
 
     private final Sql2o sql2o;
-    public Sql2oUserDao(Sql2o sql2o) {
+    public MySql2OMyUserDao(Sql2o sql2o) {
         this.sql2o = sql2o;
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<MyUser> getAllUsers() {
         String sql="select * from users";
         try(Connection con = sql2o.open()){
-            return con.createQuery(sql).executeAndFetch(User.class);
+            return con.createQuery(sql).executeAndFetch(MyUser.class);
         }
 
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(MyUser myUser) {
         String sql ="insert into users (name, position, role, departmentId) values (:name, :position, :role, :departmentId)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql,true)
-                    .bind(user)
+                    .bind(myUser)
                     .executeUpdate()
                     .getKey();
-            user.setId(id);
+            myUser.setId(id);
         }
     }
 
     @Override
-    public User findUserById(int id) {
+    public MyUser findUserById(int id) {
         String sql ="select * from users where id = :id ";
         try(Connection con = sql2o.open()){
-            return con.createQuery(sql).addParameter("id",id).executeAndFetchFirst(User.class);
+            return con.createQuery(sql).addParameter("id",id).executeAndFetchFirst(MyUser.class);
         }
     }
 
     @Override
-    public void updateUser(User user, String name, String position, String role, int departmentId) {
+    public void updateUser(MyUser myUser, String name, String position, String role, int departmentId) {
         String sql = "update users set  (name,position,role,departmentId) = (:name,:position,:role,:departmentId) where id= :id ";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
@@ -51,13 +51,13 @@ public class Sql2oUserDao implements UserDao {
                     .addParameter("position",position)
                     .addParameter("role",role)
                     .addParameter("departmentId",departmentId)
-                    .addParameter("id",user.getId())
+                    .addParameter("id", myUser.getId())
                     .executeUpdate();
 
-            user.setName(name);
-            user.setPosition(position);
-            user.setRole(role);
-            user.setDepartmentId(departmentId);
+            myUser.setName(name);
+            myUser.setPosition(position);
+            myUser.setRole(role);
+            myUser.setDepartmentId(departmentId);
         }
     }
 

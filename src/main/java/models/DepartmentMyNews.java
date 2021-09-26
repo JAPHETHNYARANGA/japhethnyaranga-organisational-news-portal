@@ -3,11 +3,11 @@ package models;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class DepartmentNews extends News {
+public class DepartmentMyNews extends MyNews {
     //departmentID
     private int departmentId;
 
-    public DepartmentNews(int id, int userId, String type, String content, Timestamp postdate, int departmentId) {
+    public DepartmentMyNews(int id, int userId, String type, String content, Timestamp postdate, int departmentId) {
         super(id, userId, type, content, postdate);
         this.departmentId = departmentId;
     }
@@ -24,7 +24,7 @@ public class DepartmentNews extends News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        DepartmentNews that = (DepartmentNews) o;
+        DepartmentMyNews that = (DepartmentMyNews) o;
         return departmentId == that.departmentId;
     }
 

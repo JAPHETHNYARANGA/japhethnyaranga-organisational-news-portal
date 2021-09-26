@@ -1,8 +1,8 @@
 package dao;
 
-import models.Department;
-import models.DepartmentNews;
-import models.User;
+import models.MyDepartment;
+import models.DepartmentMyNews;
+import models.MyUser;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -10,83 +10,83 @@ import org.sql2o.Sql2o;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Sql2oDepartmentDao implements DepartmentDao {
+public class MySql2OMyDepartmentDao implements MyDepartmentDao {
 
     private final Sql2o sql2o;
-    private final Sql2oUserDao userDao;
-    private final Sql2oNewsDao newsDao;
+    private final MySql2OMyUserDao userDao;
+    private final MySql2OMyNewsDao newsDao;
 
-    public Sql2oDepartmentDao(Sql2o sql2o) {
+    public MySql2OMyDepartmentDao(Sql2o sql2o) {
         this.sql2o = sql2o;
-        this.userDao = new Sql2oUserDao(sql2o);
-        this.newsDao = new Sql2oNewsDao(sql2o);
+        this.userDao = new MySql2OMyUserDao(sql2o);
+        this.newsDao = new MySql2OMyNewsDao(sql2o);
 
     }
 
     @Override
-    public List<Department> getAllDepartments() {
+    public List<MyDepartment> getAllDepartments() {
         String sql ="select * from departments";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
-                    .executeAndFetch(Department.class);
+                    .executeAndFetch(MyDepartment.class);
         }
 
     }
 
     @Override
-    public List<User> getDepartmentUsersById(int id) {
+    public List<MyUser> getDepartmentUsersById(int id) {
         return userDao.getAllUsers().stream()
                 .filter(user -> user.getDepartmentId()==id )
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<DepartmentNews> getDepartmentNewsById(int id) {
+    public List<DepartmentMyNews> getDepartmentNewsById(int id) {
         return newsDao.getDepartmentNews().stream()
                 .filter(dpt->dpt.getDepartmentId()==id)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addDepartment(Department department) {
+    public void addDepartment(MyDepartment myDepartment) {
         String sql = "insert into departments (name,description) values (:name,:description) ";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql,true)
-                    .bind(department)
+                    .bind(myDepartment)
                     .executeUpdate()
                     .getKey();
-            department.setId(id);
+            myDepartment.setId(id);
         }
     }
 
     @Override
-    public Department findDepartmentById(int id) {
+    public MyDepartment findDepartmentById(int id) {
         String sql ="select * from departments where id=:id";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .addParameter("id",id)
-                    .executeAndFetchFirst(Department.class);
+                    .executeAndFetchFirst(MyDepartment.class);
         }
 
     }
 
     @Override
-    public void updateDepartment(Department department, String name, String description) {
+    public void updateDepartment(MyDepartment myDepartment, String name, String description) {
         String sql ="update departments set (name, description) = (:name, :description) ";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
                     .addParameter("name",name)
                     .addParameter("description",description)
                     .executeUpdate();
-            department.setName(name);
-            department.setDescription(description);
+            myDepartment.setName(name);
+            myDepartment.setDescription(description);
         }
     }
 
-    public List<Department.DepartmentWithUserCount> getDepartmentWithUserCount(){
+    public List<MyDepartment.MyDepartmentWithUserCount> getDepartmentWithUserCount(){
         return getAllDepartments().stream()
                 .map(dpt->
-                        new Department.DepartmentWithUserCount(
+                        new MyDepartment.MyDepartmentWithUserCount(
                                 dpt.getId(),
                                 dpt.getName(),
                                 dpt.getDescription(),

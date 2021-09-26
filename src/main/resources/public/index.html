@@ -63,14 +63,14 @@
 
                     </div>
                     <ul class="mt-5">
-                        <li ng-if="users" class="my-1" ng-repeat="user in users">
+                        <li ng-if="users" class="my-1" ng-repeat="myUser in users">
                             <div class="shadow p-2 bg-white">
-                                <div class="card-title">ID: {{user.id}}</div>
+                                <div class="card-title">ID: {{myUser.id}}</div>
                                 <hr>
-                                <div class="card-text">Name: {{user.name}}</div>
-                                <div class="card-text">Position: {{user.position}}</div>
-                                <div class="card-text">Role: {{user.role}}</div>
-                                <div class="card-text">DepartmentID: {{user.departmentId}}</div>
+                                <div class="card-text">Name: {{myUser.name}}</div>
+                                <div class="card-text">Position: {{myUser.position}}</div>
+                                <div class="card-text">Role: {{myUser.role}}</div>
+                                <div class="card-text">DepartmentID: {{myUser.departmentId}}</div>
                             </div>
                         </li>
                     </ul>
@@ -104,10 +104,10 @@
                                     <div class="card-footer p-2">
                                             <span class="badge badge-pill bg-info p-2 m-1 text-white"
                                                   ng-click="viewDepartmentUsers(dpt.id)"
-                                            >department users</span>
+                                            >myDepartment users</span>
                                         <span class="badge badge-pill bg-info p-2 m-1 text-white"
                                               ng-click="viewDepartmentNews(dpt.id)"
-                                        >department news</span>
+                                        >myDepartment myNews</span>
                                     </div>
 
                                 </div>
@@ -115,14 +115,14 @@
                         </div>
 
                         <div ng-if="view_department_users">
-                            <li ng-if="department_users_list" class="my-1" ng-repeat="user in department_users_list">
+                            <li ng-if="department_users_list" class="my-1" ng-repeat="myUser in department_users_list">
                                 <div class="shadow p-2 bg-white">
-                                    <div class="card-title">ID: {{user.id}}</div>
+                                    <div class="card-title">ID: {{myUser.id}}</div>
                                     <hr>
-                                    <div class="card-text">Name: {{user.name}}</div>
-                                    <div class="card-text">Position: {{user.position}}</div>
-                                    <div class="card-text">Role: {{user.role}}</div>
-                                    <div class="card-text">DepartmentID: {{user.departmentId}}</div>
+                                    <div class="card-text">Name: {{myUser.name}}</div>
+                                    <div class="card-text">Position: {{myUser.position}}</div>
+                                    <div class="card-text">Role: {{myUser.role}}</div>
+                                    <div class="card-text">DepartmentID: {{myUser.departmentId}}</div>
                                 </div>
                             </li>
                         </div>
@@ -155,7 +155,7 @@
                         <!-- No type control since the handler will provide-->
                         <div class="input-group mb-1">
                             <button class="btn btn-success input-group-prepend">Select User</button>
-                            <select ng-model="user" ng-options="u.name for u in users"
+                            <select ng-model="myUser" ng-options="u.name for u in users"
                                     class="form-control border-0 "></select>
                         </div>
                         <input type="text" ng-model="news_content" name="gnews_content" id="gnews_content"
@@ -187,7 +187,7 @@
                         <!-- No type control since the handler will provide-->
                         <div class="input-group mb-1">
                             <button class="btn btn-success input-group-prepend">Select User</button>
-                            <select ng-model="user" ng-options="u.name for u in users"
+                            <select ng-model="myUser" ng-options="u.name for u in users"
                                     class="form-control border-0"></select>
                         </div>
                         <input type="text" ng-model="news_content" name="dnews_content" id="dnews_content"
