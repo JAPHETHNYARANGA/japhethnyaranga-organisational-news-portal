@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>NewsPortal</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+<div ng-app="newsportal" ng-controller="appcontrol">
+
+    <div class="np-controls"></div>
+
+    <div class="np-content">
+        <div class="p-2 bg-success font-weight-bolder text-white sticky-top">
+            <h2>News Portal</h2>
+        </div>
+        <div class="container mt-3">
+
+
+            <br>
+            <!-- Nav pills -->
+            <ul class="nav nav-pills nav-justified" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#users">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#departments"
+                       ng-click="viewDepartments()"
+                    >Departments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#generalNews">General News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#departmentNews">Department News</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+                <div id="users" class=" tab-pane active"><br>
+                    <h3>Users</h3>
+                    <div class="m-5">
+
+                        <input type="text" ng-model="user_name" name="user_name" id="user_name"
+                               class="form-control mb-1 border-0" placeholder="User name...">
+                        <input type="text" ng-model="user_position" name="user_position" id="user_position"
+                               class="form-control mb-1 border-0" placeholder="User position...">
+                        <input type="text" ng-model="user_role" name="user_role" id="user_role"
+                               class="form-control mb-1 border-0" placeholder="User role...">
+                        <div class="input-group mb-1">
+                            <button class="btn btn-success input-group-prepend">Select Department</button>
+                            <select ng-model="user_dept" ng-options="d.name for d in departments"
+                                    class="form-control border-0"></select>
+                        </div>
+                        <button ng-click="newUser()" class="btn btn-block btn-success p-2 font-weight-bolder text-white">Add User</button>
+
+                    </div>
+                    <ul class="mt-5">
+                        <li ng-if="users" class="my-1" ng-repeat="user in users">
+                            <div class="shadow p-2 bg-white">
+                                <div class="card-title">ID: {{user.id}}</div>
+                                <hr>
+                                <div class="card-text">Name: {{user.name}}</div>
+                                <div class="card-text">Position: {{user.position}}</div>
+                                <div class="card-text">Role: {{user.role}}</div>
+                                <div class="card-text">DepartmentID: {{user.departmentId}}</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div id="departments" class=" tab-pane fade"><br>
+                    <h3>Departments</h3>
+                    <div class="m-5">
+
+                        <input type="text" ng-model="department_name" name="department_name" id="department_name"
+                               class="form-control mb-1 border-0" placeholder="Department name...">
+                        <input type="text" ng-model="department_desc" name="department_desc" id="department_desc"
+                               class="form-control mb-1 border-0" placeholder="Department description...">
+                        <button ng-click="newDepartment()"
+                                class="btn btn-block {{btn_dept_class}} p-2 font-weight-bolder text-white ">
+                            {{btn_dept_label}}
+                        </button>
+
+                    </div>
+                    <ul class="mt-5">
+                        <div ng-if="view_departments">
+                            <li ng-if="departments" class="my-1" ng-repeat="dpt in departments">
+                                <div class="shadow p-2 bg-white">
+
+                                    <div class="card-title">ID: {{dpt.id}}</div>
+                                    <hr>
+                                    <div class="card-text">Name: {{dpt.name}}</div>
+                                    <div class="card-text">Description: {{dpt.description}}</div>
+
+                                    <div class="card-footer p-2">
+                                            <span class="badge badge-pill bg-info p-2 m-1 text-white"
+                                                  ng-click="viewDepartmentUsers(dpt.id)"
+                                            >department users</span>
+                                        <span class="badge badge-pill bg-info p-2 m-1 text-white"
+                                              ng-click="viewDepartmentNews(dpt.id)"
+                                        >department news</span>
+                                    </div>
+
+                                </div>
+                            </li>
+                        </div>
+
+                        <div ng-if="view_department_users">
+                            <li ng-if="department_users_list" class="my-1" ng-repeat="user in department_users_list">
+                                <div class="shadow p-2 bg-white">
+                                    <div class="card-title">ID: {{user.id}}</div>
+                                    <hr>
+                                    <div class="card-text">Name: {{user.name}}</div>
+                                    <div class="card-text">Position: {{user.position}}</div>
+                                    <div class="card-text">Role: {{user.role}}</div>
+                                    <div class="card-text">DepartmentID: {{user.departmentId}}</div>
+                                </div>
+                            </li>
+                        </div>
+
+
+                        <div ng-if="view_department_news">
+                            <li ng-if="department_news_list" class="my-1" ng-repeat="dnews in department_news_list">
+                                <div class="shadow p-2 bg-white">
+                                    <div class="card-title">ID: {{dnews.id}}</div>
+                                    <hr>
+                                    <div class="card-text">UserID: {{dnews.userid}}</div>
+                                    <div class="card-text">Type: {{dnews.type}}</div>
+                                    <div class="card-text">Content: {{dnews.content}}</div>
+                                    <div class="card-text">PostDate: {{dnews.postdate}}</div>
+                                    <div class="card-text">DepartmentID: {{dnews.departmentId}}</div>
+                                </div>
+                            </li>
+                        </div>
+
+
+
+                    </ul>
+
+                </div>
+
+                <div id="generalNews" class=" tab-pane fade"><br>
+                    <h3>General News</h3>
+
+                    <div class="m-5">
+                        <!-- No type control since the handler will provide-->
+                        <div class="input-group mb-1">
+                            <button class="btn btn-success input-group-prepend">Select User</button>
+                            <select ng-model="user" ng-options="u.name for u in users"
+                                    class="form-control border-0 "></select>
+                        </div>
+                        <input type="text" ng-model="news_content" name="gnews_content" id="gnews_content"
+                               class="form-control mb-1 border-0" placeholder="News content...">
+                        <button ng-click="newGeneralNews()" class="btn btn-block btn-success p-2 font-weight-bolder text-white">Post General News</button>
+
+                    </div>
+
+                    <ul class="mt-5">
+                        <li ng-if="department_news" class="my-1" ng-repeat="gnews in general_news">
+                            <div class="shadow p-2 bg-white">
+                                <div class="card-title">ID: {{gnews.id}}</div>
+                                <hr>
+                                <div class="card-text">UserID: {{gnews.userid}}</div>
+                                <div class="card-text">Type: {{gnews.type}}</div>
+                                <div class="card-text">Content: {{gnews.content}}</div>
+                                <div class="card-text">PostDate: {{gnews.postdate}}</div>
+
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div id="departmentNews" class=" tab-pane fade"><br>
+                    <h3>Department News</h3>
+
+                    <div class="m-5">
+                        <!-- No type control since the handler will provide-->
+                        <div class="input-group mb-1">
+                            <button class="btn btn-success input-group-prepend">Select User</button>
+                            <select ng-model="user" ng-options="u.name for u in users"
+                                    class="form-control border-0"></select>
+                        </div>
+                        <input type="text" ng-model="news_content" name="dnews_content" id="dnews_content"
+                               class="form-control mb-1 border-0" placeholder="News content...">
+                        <button ng-click="newDepartmentNews()" class="btn btn-block btn-success p-2 font-weight-bolder text-white">Post Department News</button>
+
+                    </div>
+
+                    <ul class="mt-5">
+                        <li ng-if="department_news" class="my-1" ng-repeat="dnews in department_news">
+                            <div class="shadow p-2 bg-white">
+                                <div class="card-title">ID: {{dnews.id}}</div>
+                                <hr>
+                                <div class="card-text">UserID: {{dnews.userid}}</div>
+                                <div class="card-text">Type: {{dnews.type}}</div>
+                                <div class="card-text">Content: {{dnews.content}}</div>
+                                <div class="card-text">PostDate: {{dnews.postdate}}</div>
+                                <div class="card-text">DepartmentID: {{dnews.departmentId}}</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="np-filters"></div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,11 +1,11 @@
 import com.google.gson.Gson;
 import dao.Sql2oDepartmentDao;
 import dao.Sql2oNewsDao;
-import dao.Sql2OMyUsersDao;
+import dao.Sql2oUserDao;
 import models.Department;
 import models.DepartmentNews;
 import models.News;
-import models.MyUsers;
+import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
@@ -20,7 +20,7 @@ public class App {
 
     private static Sql2oNewsDao newsDao;
     private static Sql2oDepartmentDao dptDao;
-    private static Sql2OMyUsersDao userDao;
+    private static Sql2oUserDao userDao;
     private static  Sql2o sql2o;
     private static URI dbUri;
     private static Logger logger = LoggerFactory.getLogger(App.class);
@@ -61,7 +61,7 @@ public class App {
 
         newsDao = new Sql2oNewsDao(sql2o);
         dptDao = new Sql2oDepartmentDao(sql2o);
-        userDao = new Sql2OMyUsersDao(sql2o);
+        userDao = new Sql2oUserDao(sql2o);
 
         staticFileLocation("/public");
 
@@ -111,9 +111,9 @@ public class App {
             return null;//gson.toJson(dpt);
         });
         post("/Users/new", "application/json", (req,res)->{
-            MyUsers myUsers = gson.fromJson(req.body(), MyUsers.class);
+            User user = gson.fromJson(req.body(), User.class);
 
-            userDao.addUser(myUsers);
+            userDao.addUser(user);
             res.status(201);
             res.type("application/json");
 

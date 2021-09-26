@@ -1,0 +1,17 @@
+<div id="generalNews" class=" tab-pane fade"><br>
+    <h3>General News</h3>
+    <ul class="mt-5">
+        <li ng-if="department_news" class="my-1" ng-repeat="gnews in general_news">
+            <div class="shadow p-2 bg-white">
+                <div class="card-title">{{gnews.id}}</div>
+                <hr>
+                <div class="card-text">{{gnews.userid}}</div>
+                <div class="card-text">{{gnews.type}}</div>
+                <div class="card-text">{{gnews.content}}</div>
+                <div class="card-text">{{gnews.postdate}}</div>
+
+            </div>
+        </li>
+    </ul>
+
+</div>

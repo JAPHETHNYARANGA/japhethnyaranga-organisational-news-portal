@@ -1,0 +1,31 @@
+<div id="users" class=" tab-pane active"><br>
+    <h3>Users</h3>
+    <div class="m-5">
+
+        <input type="text" ng-model="user_name" name="user_name" id="user_name"
+               class="form-control mb-1" placeholder="User name...">
+        <input type="text" ng-model="user_position" name="user_position" id="user_position"
+               class="form-control mb-1" placeholder="User position...">
+        <input type="text" ng-model="user_role" name="user_role" id="user_role"
+               class="form-control mb-1" placeholder="User role...">
+        <select ng-model="user_dept" ng-options="d.name for d in departments"
+                class="form-control mb-1"></select>
+        <button ng-click="newUser()" class="btn btn-block btn-success p-2 font-weight-bolder text-white">Add User</button>
+
+    </div>
+    <ul class="mt-5">
+        <li ng-if="users" class="my-1" ng-repeat="user in users">
+            <div class="shadow p-2 bg-white">
+                <div class="card-title">{{user.id}}</div>
+                <hr>
+                <div class="card-text">{{user.name}}</div>
+                <div class="card-text">{{user.position}}</div>
+                <div class="card-text">{{user.role}}</div>
+                <div class="card-text">{{user.departmentId}}</div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+

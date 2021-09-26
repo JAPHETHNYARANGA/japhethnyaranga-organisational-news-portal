@@ -1,0 +1,24 @@
+<div id="departments" class=" tab-pane fade"><br>
+    <h3>Departments</h3>
+    <div class="m-5">
+
+        <input type="text" ng-model="department_name" name="department_name" id="department_name"
+               class="form-control mb-1" placeholder="Department name...">
+        <input type="text" ng-model="department_desc" name="department_desc" id="department_desc"
+               class="form-control mb-1" placeholder="Department description...">
+        <button ng-click="newDepartment()" class="btn btn-block btn-success p-2 font-weight-bolder text-white">Add Department</button>
+
+    </div>
+    <ul class="mt-5">
+        <li ng-if="departments" class="my-1" ng-repeat="dpt in departments">
+            <div class="shadow p-2 bg-white">
+                <div class="card-title">{{dpt.id}}</div>
+                <hr>
+                <div class="card-text">{{dpt.name}}</div>
+                <div class="card-text">{{dpt.description}}</div>
+
+            </div>
+        </li>
+    </ul>
+
+</div>
