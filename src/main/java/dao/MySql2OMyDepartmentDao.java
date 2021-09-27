@@ -23,6 +23,14 @@ public class MySql2OMyDepartmentDao implements MyDepartmentDao {
 
     }
 
+
+
+    @Override
+    public List<MyUser> getMyDepartmentUsersById(int id) {
+        return userDao.getAllUsers().stream()
+                .filter(user -> user.getDepartmentId()==id )
+                .collect(Collectors.toList());
+    }
     @Override
     public List<MyDepartment> getAllDepartments() {
         String sql ="select * from departments";
@@ -32,14 +40,6 @@ public class MySql2OMyDepartmentDao implements MyDepartmentDao {
         }
 
     }
-
-    @Override
-    public List<MyUser> getDepartmentUsersById(int id) {
-        return userDao.getAllUsers().stream()
-                .filter(user -> user.getDepartmentId()==id )
-                .collect(Collectors.toList());
-    }
-
     @Override
     public List<DepartmentMyNews> getDepartmentNewsById(int id) {
         return newsDao.getDepartmentNews().stream()
@@ -90,7 +90,7 @@ public class MySql2OMyDepartmentDao implements MyDepartmentDao {
                                 dpt.getId(),
                                 dpt.getName(),
                                 dpt.getDescription(),
-                                getDepartmentUsersById(dpt.getId()).size()
+                                getMyDepartmentUsersById(dpt.getId()).size()
                         )).collect(Collectors.toList());
     }
     @Override

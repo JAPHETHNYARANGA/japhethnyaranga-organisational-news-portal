@@ -43,69 +43,28 @@ public class Sql2OMyMyUserDaoTest {
     }
 
     @Test
-    public void addUser_AddsUserSetsId_True() {
-        MyUser u1 = setUpUser();
-        MyUser u2 = setUpUser();
+    public void Return_correct_user_from_id() {
+        MyUser user1 = setUpUser();
+        MyUser user2 = setUpUser();
+        userDao.addUser(user1);
+        userDao.addUser(user2);
 
-        int u1_id = u1.getId();
-        int u2_id = u2.getId();
-
-        userDao.addUser(u1);
-        userDao.addUser(u2);
-
-        assertTrue(u1_id!=u1.getId());
-        assertTrue(u2_id!=u2.getId());
-        assertTrue(u2.getId()>u1.getId());
-        assertTrue(1==u2.getId()-u1.getId());
-        assertTrue(userDao.getAllUsers().containsAll(Arrays.asList(u1,u2)));
-    }
-
-    @Test
-    public void findUserById_ReturnsCorrectUser_True() {
-        MyUser u1 = setUpUser();
-        MyUser u2 = setUpUser();
-        userDao.addUser(u1);
-        userDao.addUser(u2);
-
-        MyUser foundMyUser = userDao.findUserById(u1.getId());
-        assertEquals(u1, foundMyUser);
+        MyUser foundMyUser = userDao.findUserById(user1.getId());
+        assertEquals(user1, foundMyUser);
 
     }
 
-    @Test
-    public void updateUser_UpdatesUserNamePositionRoleDepartmentId_True() {
-        MyUser u1 = setUpUser();
-        MyUser u2 = setUpUser();
-        userDao.addUser(u1);
-        userDao.addUser(u2);
-
-        String ol_name = u1.getName();
-        String ol_position=u1.getPosition();
-        String ol_role=u1.getRole();
-        int ol_department=u1.getDepartmentId();
-
-        userDao.updateUser(u1,"John doe","Senior","CFO",2);
-
-        assertNotEquals(ol_name, u1.getName());
-        assertNotEquals(ol_position, u1.getPosition());
-        assertNotEquals(ol_role, u1.getRole());
-        assertNotEquals(ol_department, u1.getDepartmentId());
-        assertEquals(ol_name, u2.getName());
-        assertEquals(ol_position, u2.getPosition());
-        assertEquals(ol_role, u2.getRole());
-        assertEquals(ol_department, u2.getDepartmentId());
-    }
 
     @Test
-    public void clearAllUsers_clearsAllUsers_True() {
-        MyUser u1 = setUpUser();
-        MyUser u2 = setUpUser();
-        userDao.addUser(u1);
-        userDao.addUser(u2);
+    public void clearAllUsers_True() {
+        MyUser user1 = setUpUser();
+        MyUser user2 = setUpUser();
+        userDao.addUser(user1);
+        userDao.addUser(user2);
         userDao.clearAllUsers();
 
         assertEquals(0, userDao.getAllUsers().size());
     }
 
-    private MyUser setUpUser(){return  new MyUser(0,"Ann Lyn","Junior","Admin",1); }
+    private MyUser setUpUser(){return  new MyUser(6,"japhethnyaranga","serior manager","Head of Admin",5); }
 }

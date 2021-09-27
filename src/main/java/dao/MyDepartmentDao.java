@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MyDepartmentDao {
     List<MyDepartment> getAllDepartments();
-    List<MyUser> getDepartmentUsersById(int id);
+    List<MyUser> getMyDepartmentUsersById(int id);
     List<DepartmentMyNews> getDepartmentNewsById(int id);
     void addDepartment(MyDepartment myDepartment);
     MyDepartment findDepartmentById(int id);

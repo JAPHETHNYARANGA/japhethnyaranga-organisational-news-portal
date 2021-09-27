@@ -82,7 +82,7 @@ public class App {
         });
         get("/departments/:id/users",(req,res)->{
             int dpt_id = Integer.parseInt(req.params("id"));
-            return gson.toJson(dptDao.getDepartmentUsersById(dpt_id));
+            return gson.toJson(dptDao.getMyDepartmentUsersById(dpt_id));
         });
         get("/departments/:id/news",(req,res)->{
             int dpt_id = Integer.parseInt(req.params("id"));
