@@ -88,7 +88,7 @@ public class Sql2OMyMyDepartmentDaoTest {
     }
 
     @Test
-    public void getDepartmentNewsById_ReturnsDepartmentsNews_True() {
+    public void if_getDepartmentNewsById_returns_True() {
         MyDepartment d1 = setupDepartment();
         MyDepartment d2 = setupDepartment();
 
@@ -122,7 +122,7 @@ public class Sql2OMyMyDepartmentDaoTest {
 
 
     @Test
-    public void findDepartmentById_findsCorrectDepartment_True() {
+    public void if_findDepartmentById_returns_True() {
         MyDepartment d1 = setupDepartment();
         MyDepartment d2 = setupDepartment();
 
