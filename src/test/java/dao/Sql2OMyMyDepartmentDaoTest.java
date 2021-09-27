@@ -54,11 +54,11 @@ public class Sql2OMyMyDepartmentDaoTest {
     @Test
     public void if_getDepartmentUsersById_ReturnsDepartmentsUsers_True() {
 
-        MyDepartment d1 = setupDepartment();
-        MyDepartment d2 = setupDepartment();
+        MyDepartment department1 = setupDepartment();
+        MyDepartment department2 = setupDepartment();
 
-        dptDao.addDepartment(d1);
-        dptDao.addDepartment(d2);
+        dptDao.addDepartment(department1);
+        dptDao.addDepartment(department2);
 
         MyUser myUser1 = setupUser();
         MyUser myUser2 = setupUser();
@@ -69,22 +69,22 @@ public class Sql2OMyMyDepartmentDaoTest {
         userDao.addUser(myUser3);
         userDao.addUser(myUser4);
 
-        userDao.updateUser(myUser1, myUser1.getName(), myUser1.getPosition(), myUser1.getRole(),d1.getId());
-        userDao.updateUser(myUser2, myUser2.getName(), myUser2.getPosition(), myUser2.getRole(),d1.getId());
-        userDao.updateUser(myUser3, myUser3.getName(), myUser3.getPosition(), myUser3.getRole(),d2.getId());
+        userDao.updateUser(myUser1, myUser1.getName(), myUser1.getPosition(), myUser1.getRole(),department1.getId());
+        userDao.updateUser(myUser2, myUser2.getName(), myUser2.getPosition(), myUser2.getRole(),department1.getId());
+        userDao.updateUser(myUser3, myUser3.getName(), myUser3.getPosition(), myUser3.getRole(),department2.getId());
 
         int dc = dptDao.getAllDepartments().size();
         int uc = userDao.getAllUsers().size();
 
-        assertEquals(2, dptDao.getMyDepartmentUsersById(d1.getId()).size());
-        assertTrue(dptDao.getMyDepartmentUsersById(d1.getId()).containsAll(Arrays.asList(myUser1, myUser2)));
+        assertEquals(2, dptDao.getMyDepartmentUsersById(department1.getId()).size());
+        assertTrue(dptDao.getMyDepartmentUsersById(department1.getId()).containsAll(Arrays.asList(myUser1, myUser2)));
 
 
-        assertEquals(1, dptDao.getMyDepartmentUsersById(d2.getId()).size());
-        assertTrue(dptDao.getMyDepartmentUsersById(d2.getId()).containsAll(Arrays.asList(myUser3)));
-        assertFalse(dptDao.getMyDepartmentUsersById(d2.getId()).contains(myUser1));
-        assertFalse(dptDao.getMyDepartmentUsersById(d2.getId()).contains(myUser2));
-        assertFalse(dptDao.getMyDepartmentUsersById(d2.getId()).contains(myUser4));
+        assertEquals(1, dptDao.getMyDepartmentUsersById(department2.getId()).size());
+        assertTrue(dptDao.getMyDepartmentUsersById(department2.getId()).containsAll(Arrays.asList(myUser3)));
+        assertFalse(dptDao.getMyDepartmentUsersById(department2.getId()).contains(myUser1));
+        assertFalse(dptDao.getMyDepartmentUsersById(department2.getId()).contains(myUser2));
+        assertFalse(dptDao.getMyDepartmentUsersById(department2.getId()).contains(myUser4));
     }
 
     @Test
@@ -119,24 +119,7 @@ public class Sql2OMyMyDepartmentDaoTest {
 
     }
 
-    @Test
-    public void addDepartment_addsDepartmentSetsId_True() {
 
-        MyDepartment d1 = setupDepartment();
-        MyDepartment d2 = setupDepartment();
-
-        int ol_id = d1.getId();
-        int ol_id2= d2.getId();
-
-        dptDao.addDepartment(d1);
-        dptDao.addDepartment(d2);
-
-        assertNotEquals(ol_id,d1.getId());
-        assertNotEquals(ol_id2,d2.getId());
-        assertTrue(d2.getId() >  d1.getId());
-        assertTrue(1 == d2.getId() - d1.getId());
-
-    }
 
     @Test
     public void findDepartmentById_findsCorrectDepartment_True() {

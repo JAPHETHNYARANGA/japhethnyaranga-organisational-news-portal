@@ -255,30 +255,12 @@ public class Sql2OMyMyNewsDaoTest {
         assertEquals(2,newsDao.getDepartmentNews().size());
     }
 
-    @Test
-    public void clearDepartmentNews_clearsDepartmentNewsOnly_True() {
-        MyNews n1 = setupGeneralNews();
-        MyNews n2 = setupGeneralNews();
-
-        newsDao.addGeneralNews(n1);
-        newsDao.addGeneralNews(n2);
-
-        DepartmentMyNews dn1 = setupDepartmentNews();
-        DepartmentMyNews dn2 = setupDepartmentNews();
-
-        newsDao.addDepartmentNews(dn1);
-        newsDao.addDepartmentNews(dn2);
-
-        newsDao.clearDepartmentNews();
-        assertEquals(2,newsDao.getNews().size());
-        assertEquals(0,newsDao.getDepartmentNews().size());
-    }
 
     private static MyNews setupGeneralNews(){
-        return new MyNews(-1,1, MySql2OMyNewsDao.GENERAL_NEWS,"Space Travel",new Timestamp(new Date().getTime()));
+        return new MyNews(-1,1, MySql2OMyNewsDao.GENERAL_NEWS,"The greatest Racer of all time",new Timestamp(new Date().getTime()));
     }
 
     private static DepartmentMyNews setupDepartmentNews(){
-        return new DepartmentMyNews(-1,1, MySql2OMyNewsDao.DEPARTMENT_NEWS,"Space Travel",new Timestamp(new Date().getTime()),1);
+        return new DepartmentMyNews(-1,1, MySql2OMyNewsDao.DEPARTMENT_NEWS,"The greatest Racer of all time",new Timestamp(new Date().getTime()),1);
     }
 }
